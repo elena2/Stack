@@ -11,6 +11,8 @@ for data in tag.json()['items']:
         tag_list.append(data['name'])
         
 elena = {}
+
+
 for data in tag_list:
     link = 'https://api.stackexchange.com/2.2/tags/{}/synonyms?order=desc&sort=creation&site=stackoverflow'.format(data)
     same = requests.get(link)
@@ -21,10 +23,9 @@ for data in tag_list:
             
         elena[data] = synonyms_list
     except:
-        print(same.json())
-        
-print(elena)
+        print(same.json())      
+df = pd.DataFrame.from_dict(elena, orient = 'index')
+df2 = df.iloc[:,[1,2,3,4]]
+df2.columns = ["Synonym 1" , "Synonym 2" , "Synonym 3" , "Synonym 4"]
+df2
 
-#df = pd.DataFrame.from_dict(elena)
-#print(df)
-    
